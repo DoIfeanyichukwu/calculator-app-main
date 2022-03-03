@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Calculator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+  <main class="calculator">
+    <header class="header">
+      <h2 class="logo">calc</h2>
+      <aside>
+        <p class="themes">theme</p>
+        <div class="theme-selector">
+          <div class="selection">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+          </div>
+          <div class="buttons">
+            <button class="theme-btn"></button>
+            <button class="theme-btn"></button>
+            <button class="theme-btn"></button>
+          </div>
+        </div>
+      </aside>
+    </header>
+    <div class="screen">
+      <input value="0" type="text"  class="main-screen" disabled  maxlength="8"  readonly>
+    </div>
+    <div class="operators">
+      <div class="btn">7</div>
+      <div class="btn">8</div>
+      <div class="btn">9</div>
+      <div class="btn twin">DEL</div>
+      <div class="btn">4</div>
+      <div class="btn">5</div>
+      <div class="btn">6</div>
+      <div class="btn">+</div>
+      <div class="btn">1</div>
+      <div class="btn">2</div>
+      <div class="btn">3</div>
+      <div class="btn">-</div>
+      <div class="btn">.</div>
+      <div class="btn">0</div>
+      <div class="btn">/</div>
+      <div class="btn">x</div>
+      <div class="btn twin reset">RESET</div>
+      <div class="btn uno">=</div>
+    </div>
+  </main>
+
+  
+  <!-- <div class="attribution"> -->
+    <!-- Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.  -->
+    <!-- Coded by <a href="#">Your Name Here</a>. -->
+  <!-- </div> -->
+  <script>
+    let store = Array(3).fill('');
+    let screen = document.querySelector('.main-screen');
+    let operator = document.querySelector('.operators');
+
+    const calcHandler = (event) => {
+      event.preventDefault();
+      if (event.target.tagName != 'DIV') return;
+      let target = event.target;
+
+      if (target.innerHTML.toLowerCase() == 'del')
+      {
+        if (store[0] && store[1] == '')
+        {
+          let value = store[0]
+          store[0] = value.slice(0,value.length - 1);
+          screen.value = store[0];
+        }else if (store[1]){
+          let value = store[1]
+          store[1] = value.slice(0, value.length - 1)
+          screen.value = store[1]
+        }
+      }
+
+      if (target.innerHTML.toLowerCase() == 'reset')
+      {
+        store = store.map(n => n = '');
+        screen.value = 0;
+      }
+
+      if (target.innerHTML == '.')
+      {
+        if (store[0] == '')
+        {
+          store[0] += '0.'
+          screen.value = store[0]
+        }else if (store[0] && store[1] == '')
+        {
+          store[1] += '0.'
+          screen.value = store[1];
+        }
+        if (!store[0].includes('.')) {
+          store[0] += '.';
+          screen.value = store[0];
+        }
+        if (store[1] && !store[1].includes('.'))
+        {
+          store[1] += '.';
+          screen.value = store[1];
+        }
+        
+      }
+
+      if (target.innerHTML == '=')
+      {
+        if (store[0] && store[1])
+        {
+          let result;
+          if (store[2] == '+')
+          {
+            //to reduce imprecise calculations with addition
+            result = (Number(store[0]) * 10 + Number(store[1]) * 10) / 10;
+            store[0] = String(result)
+            screen.value = store[0];
+            store[2] = ''
+            store[1] = ''
+          }
+          else if (store[2] == '-')
+          {
+            result = (Number(store[0]) * 10 - Number(store[1]) * 10) / 10;
+            store[0] = String(result)
+            screen.value = store[0];
+            store[2] = ''
+            store[1] = ''
+          }
+          else if (store[2] == '/')
+          {
+            result = Number(store[0]) / Number(store[1]);
+            store[0] = String(result)
+            screen.value = store[0];
+            store[2] = ''
+            store[1] = ''
+          }
+          else if (store[2].toLowerCase() == 'x' )
+          {
+            result = Number(store[0]) * Number(store[1]);
+            store[0] = String(result)
+            screen.value = store[0];
+            store[2] = ''
+            store[1] = ''
+          }
+        }else {
+          store[0] = '';
+        }
+      }
+
+      if (target.innerHTML == '+')
+      {
+        if (store[0] && store[1])
+        {
+          if (store[2])
+          {
+            let result;
+            if (store[2] == '+')
+            {
+              result = Number(store[0]) + Number(store[1]);
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }
+            else if (store[2] == '-')
+            {
+              //to reduce imprecise calculations with subtraction.
+              result = ((Number(store[0]) * 10) - (Number(store[1]) * 10)) / 10;
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }
+            else if (store[2] == '/')
+            {
+              result = Number(store[0]) / Number(store[1]);
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }
+            else if (store[2].toLowerCase() == 'x' )
+            {
+              result = Number(store[0]) * Number(store[1]);
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }
+            store[2] = target.innerHTML;
+          }
+        }else {
+          store[2] = target.innerHTML;
+        }
+      }
+
+      if (target.innerHTML == '-')
+      {
+        if (store[0] && store[1])
+        {
+          if (store[2])
+          {
+            let result;
+            if (store[2] == '+')
+            {
+              //to reduce imprecise calculations with addition
+              result = (Number(store[0]) * 10 + Number(store[1]) * 10) / 10;
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }else if (store[2] == '-')
+            {
+              //to reduce imprecise calculations with subtraction.
+              result = (Number(store[0]) * 10 - Number(store[1]) * 10) / 10;
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }else if (store[2] == '/')
+            {
+              result = Number(store[0]) / Number(store[1]);
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }else if (store[2].toLowerCase() == 'x' )
+            {
+              result = Number(store[0]) * Number(store[1]);
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }
+            store[2] = target.innerHTML;
+          }
+        }else {
+          store[2] = target.innerHTML;
+        }
+      }
+
+      if (target.innerHTML.toLowerCase() == 'x')
+      {
+        if (store[0] && store[1])
+        {
+          if (store[2])
+          {
+            let result;
+            if (store[2] == '+')
+            {
+              //to reduce imprecise calculations with addition
+              result = (Number(store[0]) * 10 + Number(store[1]) * 10) / 10;
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }else if (store[2] == '-')
+            {
+              //to reduce imprecise calculations with subtraction.
+              result = (Number(store[0]) * 10 - Number(store[1]) * 10) / 10;
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }else if (store[2] == '/')
+            {
+              result = Number(store[0]) / Number(store[1]);
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }else if (store[2].toLowerCase() == 'x' )
+            {
+              result = Number(store[0]) * Number(store[1]);
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }
+            store[2] = target.innerHTML;
+          }
+        }else {
+          store[2] = target.innerHTML;
+        }
+      }
+
+      if (target.innerHTML == '/')
+      {
+        if (store[0] && store[1])
+        {
+          if (store[2])
+          {
+            let result;
+            if (store[2] == '+')
+            {
+              //to reduce imprecise calculations with addition.
+              result = (Number(store[0]) * 10 + Number(store[1]) * 10) / 10;
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }else if (store[2] == '-')
+            {
+              //to reduce imprecise calculations with subtraction.
+              result = (Number(store[0]) * 10 - Number(store[1]) * 10) / 10;
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }else if (store[2] == '/')
+            {
+              result = Number(store[0]) / Number(store[1]);
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }else if (store[2].toLowerCase() == 'x' )
+            {
+              result = Number(store[0]) * Number(store[1]);
+              store[0] = String(result)
+              store[1] = '';
+              store[2] = '';
+              screen.value = store[0]
+            }
+            store[2] = target.innerHTML;
+          }
+        }else {
+          store[2] = target.innerHTML;
+        }
+      }
+
+      if (isFinite(target.innerHTML) )
+      {
+        
+        let value;
+        if (store[2] === '')
+        {
+          if (store[0].startsWith('0') && store[0][1] != '.')
+          {
+            value = store[0].slice(1)
+            store[0] = value;
+          }
+          store[0] += target.innerHTML;
+          screen.value = store[0];
+          return;
+        }
+        
+        screen.value = ''
+        if (store[1].startsWith('0') && store[1][1] != '.')
+        {
+          value = store[1].slice(1)
+          store[1] = value;
+        }
+        store[1] += target.innerHTML;
+        screen.value = store[1];
+      }
+    }
+    operator.addEventListener("click", calcHandler);
+  </script>
+</body>
+</html>
