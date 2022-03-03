@@ -88,13 +88,15 @@
 
 body {
     background-color: var(--main-background);
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-main {
-    width: 95%;
+.attribution { 
+    font-size: 11px; text-align: center;
+    margin-top: 1rem;
+}
+.attribution a { color: hsl(228, 45%, 44%); }
+
+.calculator {
     margin: 0 auto;
     margin-top: 1rem;
 }
@@ -207,14 +209,26 @@ aside {
         padding: .5rem;
         gap: .5rem;
     }
+    .calculator {
+        width: 90%;
+    }
 }
 
 
 @media (min-width: 1440px)
 {
-    .calculator {
-        width: 30%;
-        max-height: 500px;
-        /* margin: 2rem auto; */
+    :root {
+        font-size: 27px;
     }
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .calculator {
+        max-width: 500px;
+    }
+
 }
