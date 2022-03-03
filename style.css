@@ -84,6 +84,8 @@
     box-sizing: border-box;
 }
 
+
+
 body {
     background-color: var(--main-background);
     display: flex;
@@ -112,6 +114,12 @@ aside {
     border-radius: 100%;
     border: none;
     background-color: var(--toggle-color);
+    cursor: pointer;
+    opacity: 0;
+}
+
+.see {
+    opacity: 1;
 }
 
 .theme-selector {
@@ -163,6 +171,7 @@ aside {
     grid-template-rows: repeat(5, auto);
     padding: .5rem;
     gap: .5rem;
+    cursor: pointer;
 }
 .btn {
     display: flex;

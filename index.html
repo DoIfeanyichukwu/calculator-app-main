@@ -28,9 +28,9 @@
             <span>3</span>
           </div>
           <div class="buttons">
-            <button class="theme-btn"></button>
-            <button class="theme-btn"></button>
-            <button class="theme-btn"></button>
+            <button class="theme-btn default" value="default"></button>
+            <button class="theme-btn light" value="light"></button>
+            <button class="theme-btn dark" value="dark"></button>
           </div>
         </div>
       </aside>
@@ -66,10 +66,26 @@
     <!-- Coded by <a href="#">Your Name Here</a>. -->
   <!-- </div> -->
   <script>
+
+    const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+
+    if (currentTheme) {
+      document.documentElement.setAttribute('data-theme', currentTheme);
+      const themeBtns = Array.from(document.querySelectorAll('.theme-btn'))
+      themeBtns.map(btn => {
+        if (btn.classList.contains('see') && !btn.classList.contains(currentTheme)) {
+          btn.classList.remove('see')
+        }
+        else if (btn.classList.contains(currentTheme))
+        {
+          btn.classList.add('see');
+        }
+      })
+    }
+
     let store = Array(3).fill('');
     let screen = document.querySelector('.main-screen');
     let operator = document.querySelector('.operators');
-
     const calcHandler = (event) => {
       event.preventDefault();
       if (event.target.tagName != 'DIV') return;
@@ -370,6 +386,24 @@
       }
     }
     operator.addEventListener("click", calcHandler);
+
+    const buttons = document.querySelector('.buttons');
+    const themeHandlear = (event) => {
+      event.preventDefault()
+      const target = event.target;
+      if (target.tagName != 'BUTTON' && !target.classList.contains('theme-btn')) return;
+      document.documentElement.setAttribute('data-theme', target.value);
+      localStorage.setItem('theme', target.value);
+      target.classList.add('see');
+
+      const themeBtns = Array.from(document.querySelectorAll('.theme-btn'))
+      themeBtns.map(btn => {
+        if (btn.classList.contains('see') && (btn != target)) {
+          btn.classList.remove('see')
+        }
+      })
+    }
+    buttons.addEventListener("click", themeHandlear);
   </script>
 </body>
 </html>
