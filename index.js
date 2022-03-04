@@ -24,13 +24,20 @@ const calcHandler = (event) => {
   if (event.target.tagName != 'DIV') return;
   let target = event.target;
 
+  if ((target.innerHTML == '+' || target.innerHTML == '-' || target.innerHTML == '/' || target.innerHTML.toLowerCase() == 'x') && store[0] == '') return;
+
   if (target.innerHTML.toLowerCase() == 'del')
   {
     if (store[0] && store[1] == '')
     {
       let value = store[0]
       store[0] = value.slice(0,value.length - 1);
-      screen.value = store[0];
+      if (store[0] == '')
+      {
+        screen.value = '0';
+      }else {
+        screen.value = store[0];
+      }
     }else if (store[1]){
       let value = store[1]
       store[1] = value.slice(0, value.length - 1)

@@ -99,6 +99,7 @@ body {
 .calculator {
     margin: 0 auto;
     margin-top: 1rem;
+    max-width: 500px;
 }
 .header {
     display: flex;
@@ -229,6 +230,7 @@ aside {
 
     .calculator {
         max-width: 500px;
+        margin-top: 3rem;
     }
 
 }
