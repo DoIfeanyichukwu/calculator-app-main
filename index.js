@@ -1,5 +1,70 @@
 "use strict";
 
+class Stack {
+  constructor()
+  {
+    this.count = 0;
+    this.items = {};
+  }
+
+  push(element)
+  {
+    this.items[this.count] = element;
+    this.count++;
+  }
+
+  pop()
+  {
+    if (this.isEmpty())
+    {
+      return undefined;
+    }
+    this.count--;
+    const result = this.items[this.count];
+    delete this.items[this.count];
+    return result;
+  }
+
+  peek()
+  {
+    if (this.isEmpty())
+    {
+      return undefined
+    }
+    return this.items[this.count - 1];
+  }
+
+  size()
+  {
+    return this.count
+  }
+
+  isEmpty()
+  {
+    return this.count === 0;
+  }
+
+  clear()
+  {
+    this.items = {};
+    this.count = 0;
+  }
+
+  toString()
+  {
+    if (this.isEmpty())
+    {
+      return '';
+    }
+    let objString = `${this.items[0]}`
+    for (let i = 1; i < this.count; i++)
+    {
+      objString = `${objString},${this.items[i]}`;
+    }
+    return objString;
+  }
+}
+
 const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
 
 if (currentTheme) {
@@ -112,7 +177,33 @@ const calcHandler = (event) => {
       {
         solve(times)
       }
-    }else {
+      store[0] = '';
+    }else if ((store[0] && !store[1]) && store[2]) {
+      if (store[2] == '+') {
+        let result = (Number(store[0]) * 10 + Number(store[0]) * 10) / 10;
+        screen.value = result;
+      }
+      else if (store[2] == '-')
+      {
+        let result = (Number(store[0]) * 10 - Number(store[0]) * 10) / 10;
+        screen.value = result;
+      }
+      else if (store[2] == '/')
+      {
+        let result = (Number(store[0]) / Number(store[0]));
+        screen.value = result;
+      }
+      else if (store[2].toLowerCase() == 'x')
+      {
+        let result = (Number(store[0]) * Number(store[0]))
+        screen.value = result;
+      }
+      store[0] = '';
+      store[2] = '';
+    }
+    else {
+      let value = store[0]
+      screen.value = String(Number(value));
       store[0] = '';
     }
   }
