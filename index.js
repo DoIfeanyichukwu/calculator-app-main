@@ -26,6 +26,22 @@ const calcHandler = (event) => {
 
   if ((target.innerHTML == '+' || target.innerHTML == '-' || target.innerHTML == '/' || target.innerHTML.toLowerCase() == 'x') && store[0] == '') return;
 
+  const solve = (f, screen_val=false) => {
+    let result = f(store);
+    store[0] = String(result);
+    screen.value = store[0];
+    store[2] = '';
+    store[1] = '';
+    if (screen_val == true) screen.value = store[0];
+    return;
+  }
+  //to reduce imprecise calculations with addition
+  const plus = (store) => (Number(store[0]) * 10 + Number(store[1]) * 10) / 10;
+  //to reduce imprecise calculations with subtraction.
+  const minus = (store) => ((Number(store[0]) * 10) - (Number(store[1]) * 10)) / 10;
+  const divide = (store) => Number(store[0]) / Number(store[1]);
+  const times = (store) => Number(store[0]) * Number(store[1]);
+
   if (target.innerHTML.toLowerCase() == 'del')
   {
     if (store[0] && store[1] == '')
@@ -82,35 +98,19 @@ const calcHandler = (event) => {
       if (store[2] == '+')
       {
         //to reduce imprecise calculations with addition
-        result = (Number(store[0]) * 10 + Number(store[1]) * 10) / 10;
-        store[0] = String(result)
-        screen.value = store[0];
-        store[2] = ''
-        store[1] = ''
+        solve(plus);
       }
       else if (store[2] == '-')
       {
-        result = (Number(store[0]) * 10 - Number(store[1]) * 10) / 10;
-        store[0] = String(result)
-        screen.value = store[0];
-        store[2] = ''
-        store[1] = ''
+        solve(minus);
       }
       else if (store[2] == '/')
       {
-        result = Number(store[0]) / Number(store[1]);
-        store[0] = String(result)
-        screen.value = store[0];
-        store[2] = ''
-        store[1] = ''
+        solve(divide)
       }
       else if (store[2].toLowerCase() == 'x' )
       {
-        result = Number(store[0]) * Number(store[1]);
-        store[0] = String(result)
-        screen.value = store[0];
-        store[2] = ''
-        store[1] = ''
+        solve(times)
       }
     }else {
       store[0] = '';
@@ -123,39 +123,21 @@ const calcHandler = (event) => {
     {
       if (store[2])
       {
-        let result;
         if (store[2] == '+')
         {
-          result = Number(store[0]) + Number(store[1]);
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(plus, true);
         }
         else if (store[2] == '-')
         {
-          //to reduce imprecise calculations with subtraction.
-          result = ((Number(store[0]) * 10) - (Number(store[1]) * 10)) / 10;
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(minus, true);
         }
         else if (store[2] == '/')
         {
-          result = Number(store[0]) / Number(store[1]);
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(divide, true);
         }
         else if (store[2].toLowerCase() == 'x' )
         {
-          result = Number(store[0]) * Number(store[1]);
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(times, true);
         }
         store[2] = target.innerHTML;
       }
@@ -173,34 +155,17 @@ const calcHandler = (event) => {
         let result;
         if (store[2] == '+')
         {
-          //to reduce imprecise calculations with addition
-          result = (Number(store[0]) * 10 + Number(store[1]) * 10) / 10;
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(plus, true)
         }else if (store[2] == '-')
         {
-          //to reduce imprecise calculations with subtraction.
-          result = (Number(store[0]) * 10 - Number(store[1]) * 10) / 10;
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(minus, true);
         }else if (store[2] == '/')
         {
           result = Number(store[0]) / Number(store[1]);
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(divide, true);
         }else if (store[2].toLowerCase() == 'x' )
         {
-          result = Number(store[0]) * Number(store[1]);
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(times, true);
         }
         store[2] = target.innerHTML;
       }
@@ -218,34 +183,16 @@ const calcHandler = (event) => {
         let result;
         if (store[2] == '+')
         {
-          //to reduce imprecise calculations with addition
-          result = (Number(store[0]) * 10 + Number(store[1]) * 10) / 10;
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(plus, true);
         }else if (store[2] == '-')
         {
-          //to reduce imprecise calculations with subtraction.
-          result = (Number(store[0]) * 10 - Number(store[1]) * 10) / 10;
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(minus, true);
         }else if (store[2] == '/')
         {
-          result = Number(store[0]) / Number(store[1]);
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(divide, true);
         }else if (store[2].toLowerCase() == 'x' )
         {
-          result = Number(store[0]) * Number(store[1]);
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(times, true);
         }
         store[2] = target.innerHTML;
       }
@@ -263,34 +210,16 @@ const calcHandler = (event) => {
         let result;
         if (store[2] == '+')
         {
-          //to reduce imprecise calculations with addition.
-          result = (Number(store[0]) * 10 + Number(store[1]) * 10) / 10;
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(plus, true);
         }else if (store[2] == '-')
         {
-          //to reduce imprecise calculations with subtraction.
-          result = (Number(store[0]) * 10 - Number(store[1]) * 10) / 10;
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(minus, true);
         }else if (store[2] == '/')
         {
-          result = Number(store[0]) / Number(store[1]);
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(divide, true);
         }else if (store[2].toLowerCase() == 'x' )
         {
-          result = Number(store[0]) * Number(store[1]);
-          store[0] = String(result)
-          store[1] = '';
-          store[2] = '';
-          screen.value = store[0]
+          solve(times, true);
         }
         store[2] = target.innerHTML;
       }
