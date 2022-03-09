@@ -81,7 +81,7 @@ if (currentTheme) {
   })
 }
 
-let store = Array(3).fill('');
+let store = Array(4).fill('');
 let screen = document.querySelector('.main-screen');
 let operator = document.querySelector('.operators');
 const calcHandler = (event) => {
@@ -90,6 +90,8 @@ const calcHandler = (event) => {
   let target = event.target;
 
   if ((target.innerHTML == '+' || target.innerHTML == '-' || target.innerHTML == '/' || target.innerHTML.toLowerCase() == 'x') && store[0] == '') return;
+
+  let equaltrue = false;
 
   const solve = (f, screen_val=false) => {
     let result = f(store);
@@ -177,7 +179,6 @@ const calcHandler = (event) => {
       {
         solve(times)
       }
-      store[0] = '';
     }else if ((store[0] && !store[1]) && store[2]) {
       if (store[2] == '+') {
         let result = (Number(store[0]) * 10 + Number(store[0]) * 10) / 10;
@@ -201,11 +202,16 @@ const calcHandler = (event) => {
       store[0] = '';
       store[2] = '';
     }
+    else if (store[0])
+    {
+      return;
+    }
     else {
       let value = store[0]
       screen.value = String(Number(value));
       store[0] = '';
     }
+    store[3] = true;
   }
 
   if (target.innerHTML == '+')
@@ -321,9 +327,9 @@ const calcHandler = (event) => {
 
   if (isFinite(target.innerHTML) )
   {
-    
+    // if equaltrue === true; 
     let value;
-    if (store[2] === '')
+    if (store[2] === '' && ((store[3] === false) || (store[3] === '')))
     {
       if (store[0].startsWith('0') && store[0][1] != '.')
       {
@@ -334,15 +340,22 @@ const calcHandler = (event) => {
       screen.value = store[0];
       return;
     }
-    
-    screen.value = ''
-    if (store[1].startsWith('0') && store[1][1] != '.')
+    else if ( (store[2] === '') && (store[3] === true) )
     {
-      value = store[1].slice(1)
-      store[1] = value;
+      store[3] = false;
+      store[0] = target.innerHTML;
+      screen.value = store[0];
+    }else {
+      screen.value = ''
+      if (store[1].startsWith('0') && store[1][1] != '.')
+      {
+        value = store[1].slice(1)
+        store[1] = value;
+      }
+      store[1] += target.innerHTML;
+      screen.value = store[1];
     }
-    store[1] += target.innerHTML;
-    screen.value = store[1];
+    
   }
 }
 operator.addEventListener("click", calcHandler);
