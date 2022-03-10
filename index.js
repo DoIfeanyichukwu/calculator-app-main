@@ -208,6 +208,7 @@ const calcHandler = (event) => {
     }
     else if (store[0])
     {
+      store[3] = true;
       return;
     }
     else {
