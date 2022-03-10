@@ -80,16 +80,21 @@ if (currentTheme) {
     }
   })
 }
-
-let store = Array(4).fill('');
+// store[0] ==> first value
+// store[1] ==> second value
+// store[2] ==> sign
+// store[3] ==> equals monitor.
+// store[4] ==> negative sign monitor 
+let store = Array(5).fill('');
 let screen = document.querySelector('.main-screen');
 let operator = document.querySelector('.operators');
+
 const calcHandler = (event) => {
   event.preventDefault();
   if (event.target.tagName != 'DIV') return;
   let target = event.target;
 
-  if ((target.innerHTML == '+' || target.innerHTML == '-' || target.innerHTML == '/' || target.innerHTML.toLowerCase() == 'x') && store[0] == '') return;
+  if ((target.innerHTML == '+' || target.innerHTML == '/' || target.innerHTML.toLowerCase() == 'x') && store[0] == '') return;
 
   let equaltrue = false;
 
@@ -245,6 +250,12 @@ const calcHandler = (event) => {
 
   if (target.innerHTML == '-')
   {
+
+    if (store[0] === '') {
+      store[4] = '-'
+      return;
+    }
+
     if (store[0] && store[1])
     {
       if (store[2])
@@ -266,7 +277,8 @@ const calcHandler = (event) => {
         }
         store[2] = target.innerHTML;
       }
-    }else {
+    }
+    else {
       store[2] = target.innerHTML;
     }
   }
@@ -331,6 +343,12 @@ const calcHandler = (event) => {
     let value;
     if (store[2] === '' && ((store[3] === false) || (store[3] === '')))
     {
+      if (store[4]) {
+        store[0] = store[4] + target.innerHTML;
+        store[4] = '';
+        screen.value = store[0];
+        return;
+      }
       if (store[0].startsWith('0') && store[0][1] != '.')
       {
         value = store[0].slice(1)
@@ -358,9 +376,11 @@ const calcHandler = (event) => {
     
   }
 }
+
 operator.addEventListener("click", calcHandler);
 
 const buttons = document.querySelector('.buttons');
+
 const themeHandlear = (event) => {
   event.preventDefault()
   const target = event.target;
@@ -376,4 +396,5 @@ const themeHandlear = (event) => {
     }
   })
 }
+
 buttons.addEventListener("click", themeHandlear);
