@@ -91,12 +91,11 @@ let operator = document.querySelector('.operators');
 
 const calcHandler = (event) => {
   event.preventDefault();
-  if (event.target.tagName != 'DIV') return;
+  if (event.target.tagName != 'BUTTON') return;
   let target = event.target;
 
   if ((target.innerHTML == '+' || target.innerHTML == '/' || target.innerHTML.toLowerCase() == 'x') && store[0] == '') return;
 
-  let equaltrue = false;
 
   const solve = (f, screen_val=false) => {
     let result = f(store);
@@ -316,7 +315,6 @@ const calcHandler = (event) => {
     {
       if (store[2])
       {
-        let result;
         if (store[2] == '+')
         {
           solve(plus, true);

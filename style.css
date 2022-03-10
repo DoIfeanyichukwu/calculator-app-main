@@ -85,6 +85,11 @@
 }
 
 
+button {
+    border: none;
+    font-size: 1rem;
+}
+
 
 body {
     background-color: var(--main-background);
