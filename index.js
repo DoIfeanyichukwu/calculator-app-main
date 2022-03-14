@@ -158,6 +158,14 @@ const calcHandler = (event) => {
       store[1] += '.';
       screen.value = store[1];
     }
+    if (store[3] && store[0])
+    {
+      store[3] = false;
+      store[0] = ''
+      store[1] = ''
+      store[0] += '0.'
+      screen.value = store[0]
+    }
     
   }
 
