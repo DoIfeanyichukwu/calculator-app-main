@@ -33,7 +33,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [My solution](https://github.com/DoIfeanyichukwu/calculator-app-main)
+- Solution URL: [My solution](https://github.com/HIIfeanyichukwu/calculator-app-main)
 - Live Site URL: [calculator-app-main](https://calculator-app-main.surge.sh)
 
 ## My process
