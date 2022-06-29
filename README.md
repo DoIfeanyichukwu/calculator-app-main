@@ -57,8 +57,8 @@ A good resource that enabled my understanding of [Event Delegation](https://java
 ## Author
 
 - Website - [Ifeanyichukwu Ifeanyichukwu](https://www.your-site.com)
-- Frontend Mentor - [@DoIfeanyichukw](https://www.frontendmentor.io/profile/DoIfeanyichukwu)
-- Twitter - [@DoIfeanyichukwu](https://www.twitter.com/DoIfeanyichukwu)
+- Frontend Mentor - [@HIIfeanyichukwu](https://www.frontendmentor.io/profile/HIIfeanyichukwu)
+- Twitter - [@HIIfeanyichukwu](https://www.twitter.com/HIIfeanyichukwu)
 
 
 ***
